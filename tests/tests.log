@@ -1,9 +1,0 @@
-DEBUG tests/statserve_tests.c:18: ----- RUNNING: ./tests/statserve_tests
-DEBUG tests/statserve_tests.c:13: 
------ test
-DEBUG tests/statserve_tests.c:18: ----- RUNNING: ./tests/statserve_tests
-DEBUG tests/statserve_tests.c:13: 
------ test
-DEBUG tests/statserve_tests.c:18: ----- RUNNING: ./tests/statserve_tests
-DEBUG tests/statserve_tests.c:13: 
------ test
