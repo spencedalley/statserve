@@ -1,18 +1,44 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <lcthw/dbg.h> 
+#include <lcthw/ringbuffer.h> 
 #include <signal.h> 
 #include <unistd.h>
 #include <stdlib.h> 
 #include <sys/wait.h>
 #include <netdb.h> 
-#include <fcntl.h>  
- 
+#include <fcntl.h>
+#include "net.h"  
+
+const int RB_SIZE = 1024 * 10;   
 	
 void handle_sigchild(int sig) {
 	// prevent child processes from leaking
 	while(waitpid(-1, NULL, WNOHANG) > 0) { }
 } 
+
+void client_handler(int client_fd) 
+{
+	int rc = 0; 
+	
+	// need a ringbuffer for the input
+	RingBuffer *sock_rb = RingBuffer_create(RB_SIZE);
+	
+	while(read_some(sock_rb, client_fd, 1) != -1) {
+		if(write_some(sock_rb, client_fd, 1) == -1) {
+			debug("Client closed."); 
+			break; 
+		}
+	}
+
+	// close the socket
+	rc = close(client_fd); 
+	check(rc != -1, "Failed to close the socket.");  
+
+error:
+//	if(sock_rb) Ringbuffer_destroy(sock_rb);  
+	exit(0); // just exit child
+}	
 
 int echo_server(const char *host, const char *port)
 {
@@ -46,12 +72,16 @@ int echo_server(const char *host, const char *port)
 		check(client_fd >= 0, "Failed to accept connection."); 
 		debug("Client connected.");
 
-		 
-	
-		// fork 
-		// if 0 then child
-		// else server
+		rc = fork(); 
+		if(rc == 0) {
+			client_handler(client_fd);
+			// handle the client 
+		} else {
+			// server process
+			close(client_fd); // don't need this 
 		}
+	
+	}
 
 error: // fallthrough
     return -1;
