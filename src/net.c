@@ -167,3 +167,30 @@ error:
 	// this gets set by the above to either -1 or valid 
 	return sockfd; 
 }
+
+bstring read_line(RingBuffer *input, const char line_ending)
+{
+    int i = 0; 
+    bstring result = NULL; 
+
+    for(i = 0; i < RingBuffer_available_data(input); i++) {
+        if(input->buffer[i] == line_ending) {
+            // get that much from the RingBuffer
+            result = RingBuffer_gets(input, i); 
+            check(result, "Failed to get line from RingBuffer");
+            // make sure we got the right amount
+            check(RingBuffer_available_data(input) >= 1, 
+                "Not enough data in the RingBuffer after reading line."); 
+            // and commit it
+            RingBuffer_commit_read(input, 1); 
+            break; 
+        }
+    }
+
+    // will fail on cases where we get a set of data on the wire that doesn't have a line ending 
+    return result; 
+error: 
+    return NULL; 
+
+    return NULL; 
+}
