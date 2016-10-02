@@ -1,62 +1,81 @@
-Statserve
-========================================
-A simple web server that can echo back statistics on data. 
+# Statserve Project
+Statserve is a simple webserver written in C that echos back statistics on processes and can be extended to use custom protocols. 
 
-Installation: 
-========================================
-To install liblcthw, download it, cd to the directory, and run the following commands: 
+## Setup: 
+Statserve requires one dependency which can be found at the following url: 
 
-    $ ./configure
-    $ make install
+`https://github.com/spencedalley/liblcthw`
 
+With the dependency installed, you can just clone the project, run `$ make` and statserve should be ready to use. 
 
-Usage: 
-========================================
+## Usage:
 
-Statserve supports 2 simple protocols at the moment
+####Running the server:
 
-Running the server:
-----------------------------------------
 To start the server, just run: 
+```
+$ bin/statserve <host> <port>
+```
+Below shows an example connecting to localhost on port 8000. 
 
-	$ bin/statserve <host> <port>
+```
+$ bin/statserve 127.0.0.1 8000
+```
 
-Where <host> and <port> are the hostname and port that you want to connect to. An example is below: 
+#### Connecting to the server:
+Below is an example method of connecting to the server which is running on localhost port 8000.
+```
+$ nc 127.0.0.1 8000
+```
 
-	$ bin/statserve 127.0.0.1 8000
-
-This will set the server up locally and have it listen on port 8000. The server can be connected to with the nc command. 
-
-Connecting to the server:
-----------------------------------------
-Below is an example method of connecting to the server, assuming it is running locally on port 8000: 
-
-	$ nc 127.0.0.1 8000
+#### Server protocols
+This version of statserve has create, sample, update, and delete protocols implemented
 
 Create protocol:
 ----------------------------------------
-Create a new statistic instance on the server with the following: 
+Create a new statistic instance on the server with the following command: 
 
-	$ create /<url_ending> <num> 
-
+```
+$ create /<url_ending> <num> 
+```
 Sample protocol:
 ----------------------------------------
-Fetch sample statistics from the server with the following: 
+Fetch sample statistics from the server with the following command: 
 
-	$ sample /<url_ending> 
+```
+$ sample /<url_ending> 
+```
 
-Future Development: 
-========================================
-The focus for future development is to make statserve support the following protocols: 
+Update protocol:
+----------------------------------------
+Update sample statistics from the server with the following command: 
 
-* delete <url>: Delete data from server
-* update <url> <val>: Update url with val
+```
+$ update /<url_ending> <num>
+```
 
-Creating a more robust parser for the protocol
+Delete protocol:
+----------------------------------------
+Delete sample statistics from the server with the following command: 
 
-Running Tests: 
-========================================
+```
+$ delete /<url_ending> 
+```
+## Future Development: 
+
+Future development will focus on: 
+* Creating a more robust parser for the protocol
+
+## Running Tests: 
 Tests are run with the following command: 
+```
+$ make
 
-    $ make
-
+sh ./tests/runtests.sh
+Running unit tests
+-----
+RUNNING: ./tests/statserve_tests
+ALL TESTS PASSED
+Tests run: 5
+tests/statserve_tests PASS
+```
