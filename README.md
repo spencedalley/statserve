@@ -10,7 +10,7 @@ With the dependency installed, you can just clone the project, run `$ make` and 
 
 ## Usage:
 
-####Running the server:
+### Running the server:
 
 To start the server, just run: 
 ```
@@ -22,40 +22,36 @@ Below shows an example connecting to localhost on port 8000.
 $ bin/statserve 127.0.0.1 8000
 ```
 
-#### Connecting to the server:
+### Connecting to the server:
 Below is an example method of connecting to the server which is running on localhost port 8000.
 ```
 $ nc 127.0.0.1 8000
 ```
 
-#### Server protocols
+### Server protocols
 This version of statserve has create, sample, update, and delete protocols implemented
 
-Create protocol:
-----------------------------------------
+##### Create protocol:
 Create a new statistic instance on the server with the following command: 
 
 ```
 $ create /<url_ending> <num> 
 ```
-Sample protocol:
-----------------------------------------
+##### Sample protocol:
 Fetch sample statistics from the server with the following command: 
 
 ```
 $ sample /<url_ending> 
 ```
 
-Update protocol:
-----------------------------------------
+##### Update protocol:
 Update sample statistics from the server with the following command: 
 
 ```
 $ update /<url_ending> <num>
 ```
 
-Delete protocol:
-----------------------------------------
+##### Delete protocol:
 Delete sample statistics from the server with the following command: 
 
 ```
