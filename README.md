@@ -31,27 +31,27 @@ $ nc 127.0.0.1 8000
 ### Server protocols
 This version of statserve has create, sample, update, and delete protocols implemented
 
-##### Create protocol:
+#### Create protocol:
 Create a new statistic instance on the server with the following command: 
 
 ```
 $ create /<url_ending> <num> 
 ```
-##### Sample protocol:
+#### Sample protocol:
 Fetch sample statistics from the server with the following command: 
 
 ```
 $ sample /<url_ending> 
 ```
 
-##### Update protocol:
+#### Update protocol:
 Update sample statistics from the server with the following command: 
 
 ```
 $ update /<url_ending> <num>
 ```
 
-##### Delete protocol:
+#### Delete protocol:
 Delete sample statistics from the server with the following command: 
 
 ```
